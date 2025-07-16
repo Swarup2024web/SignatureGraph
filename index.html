@@ -4,20 +4,32 @@
   <meta charset="UTF-8" />
   <title>Signature Graph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script&family=Pacifico&family=Satisfy&family=Allura&display=swap" rel="stylesheet" />
+  <!-- Style -->
   <link rel="stylesheet" href="style.css" />
+  <!-- OpenType.js -->
   <script src="https://cdn.jsdelivr.net/npm/opentype.js@1.3.4/dist/opentype.min.js"></script>
 </head>
 <body>
   <div class="container">
-    <h1>✒️ Signature Graph Generator</h1>
+    <h1>✒️ Signature Graph</h1>
 
-    <div class="input-group">
+    <div class="controls">
       <input type="text" id="nameInput" placeholder="Enter your name..." />
+      <select id="fontSelect">
+        <option value="GreatVibes-Regular.ttf">Great Vibes</option>
+        <option value="DancingScript-Regular.ttf">Dancing Script</option>
+        <option value="Pacifico-Regular.ttf">Pacifico</option>
+        <option value="Satisfy-Regular.ttf">Satisfy</option>
+        <option value="Allura-Regular.ttf">Allura</option>
+      </select>
       <button onclick="generateSignature()">Generate</button>
     </div>
 
-    <canvas id="signatureCanvas" width="800" height="300"></canvas>
+    <div class="canvas-wrapper">
+      <canvas id="signatureCanvas" width="800" height="300"></canvas>
+    </div>
   </div>
 
   <script src="script.js"></script>
