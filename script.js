@@ -1,12 +1,7 @@
 const canvas = document.getElementById("signatureCanvas");
 const ctx = canvas.getContext("2d");
 
-let pathPoints = [];
-let drawIndex = 0;
-let hue = 0;
-let animationFrame = null;
-
-// Map of font names to their CDN URLs (.ttf)
+// Font map: option values MUST match <select> in index.html
 const fontURLs = {
   "GreatVibes-Regular.ttf":
     "https://cdn.jsdelivr.net/gh/google/fonts/ofl/greatvibes/GreatVibes-Regular.ttf",
@@ -17,8 +12,13 @@ const fontURLs = {
   "Satisfy-Regular.ttf":
     "https://cdn.jsdelivr.net/gh/google/fonts/ofl/satisfy/Satisfy-Regular.ttf",
   "Allura-Regular.ttf":
-    "https://cdn.jsdelivr.net/gh/google/fonts/ofl/allura/Allura-Regular.ttf",
+    "https://cdn.jsdelivr.net/gh/google/fonts/ofl/allura/Allura-Regular.ttf"
 };
+
+let pathPoints = [];
+let drawIndex = 0;
+let hue = 0;
+let animationFrame = null;
 
 function drawRuledLines() {
   const spacing = canvas.height / 5;
@@ -44,16 +44,15 @@ function generateSignature() {
   }
 
   const fontURL = fontURLs[fontFile];
-
   if (!fontURL) {
-    alert("Font URL not found!");
+    alert("Font not supported.");
     return;
   }
 
-  // Clear previous animation and canvas
+  // Reset canvas
   cancelAnimationFrame(animationFrame);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawRuledLines(); // re-draw lines
+  drawRuledLines();
   pathPoints = [];
   drawIndex = 0;
   hue = 0;
@@ -71,12 +70,10 @@ function generateSignature() {
     const path = font.getPath(name, xStart, yBase, fontSize);
     const pathData = path.commands;
 
-    // Extract vector points
-    for (let cmd of pathData) {
-      if (cmd.x !== undefined && cmd.y !== undefined) {
-        pathPoints.push({ x: cmd.x, y: cmd.y });
-      }
-    }
+    // Convert commands to coordinate points
+    pathPoints = pathData
+      .filter(cmd => cmd.x !== undefined && cmd.y !== undefined)
+      .map(cmd => ({ x: cmd.x, y: cmd.y }));
 
     animateDrawing();
   });
@@ -105,4 +102,4 @@ function animateDrawing() {
   }
 
   draw();
-}
+    }
